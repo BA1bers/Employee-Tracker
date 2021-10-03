@@ -282,3 +282,4 @@ function deleteDepartment() {
 };
 
 mainMenu()
+//Getting Mysql12 Error, can't figure out why
