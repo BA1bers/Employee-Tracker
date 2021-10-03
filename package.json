@@ -1,0 +1,32 @@
+{
+    "name": "employee-tracker",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+        "test": "jest",
+        "start": "node server.js",
+        "dev": "nodemon server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/BA1bers/Employee-Tracker.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/BA1bers/Employee-Tracker/issues"
+    },
+    "homepage": "https://github.com/BA1bers/Employee-Tracker#readme",
+    "dependencies": {
+        "console.table": "^0.10.0",
+        "express": "^4.17.1",
+        "inquirer": "^8.1.2",
+        "mysql2": "^2.2.5"
+    },
+    "devDependencies": {
+        "jest": "^27.0.6",
+        "nodemon": "^2.0.12"
+    }
+}
