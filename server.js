@@ -1,7 +1,30 @@
 const { prompt } = require("inquirer");
+const express = require("express");
 const mysql = require("mysql2");
 const db = require("./db/connection");
 const table = require("console.table");
+const { appendFile } = require("fs");
+require('console.table');
+const PORT = process.env.PORT || 3001;
+const app = express();
+//Currently having issue where app immediately closes when ran
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+app.get("/api/employee", (req, res) => {
+    const sql = `SELECT * FROM employee`;
+    db.query(sql, (err, rows) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+        }
+        res.json({
+            message: "success",
+            data: rows,
+        });
+    });
+});
 
 function mainMenu() {
     console.log(`
@@ -27,7 +50,7 @@ function mainMenu() {
         {
             type: "list",
             message: "What would you like to do?",
-            name: "list",
+            name: "choice",
             choices: [
                 "View all Employees",
                 "Add Employee",
@@ -38,33 +61,35 @@ function mainMenu() {
                 "View all Departments",
                 "Add Department",
                 "Delete Department",
-                "Exit"
+                "Quit"
             ],
         },
     ]).then((answers) => {
-        if (answers.list === "View All Employees") {
+        if (answers.choice === "View All Employees") {
             viewAllEmployees();
-        } else if (answers.list === "Add Employee") {
+        } else if (answers.choice === "Add Employee") {
             addEmployee();
-        } else if (answers.list === "Delete Employee") {
+        } else if (answers.choice === "Delete Employee") {
             deleteEmployee();
-        } else if (answers.list === "View All Roles") {
+        } else if (answers.choice === "View All Roles") {
             viewAllRoles();
-        } else if (answers.list === "Add Role") {
+        } else if (answers.choice === "Add Role") {
             addRole();
-        } else if (answers.list === "Delete Role") {
+        } else if (answers.choice === "Delete Role") {
             deleteRole();
-        } else if (answers.list === "View All Departments") {
+        } else if (answers.choice === "View All Departments") {
             viewAllDepartments();
-        } else if (answers.list === "Add Department") {
+        } else if (answers.choice === "Add Department") {
             addDepartment();
-        } else if (answers.list === "Delete Department") {
+        } else if (answers.choice === "Delete Department") {
             deleteDepartment();
-        } else if (answers.list === "Exit") {
-            db.end();
+        } else if (answers.choice === "Quit") {
+            //db.end();
         }
     });
 };
+
+mainMenu();
 
 function viewAllEmployees() {
     console.log(`
@@ -281,5 +306,6 @@ function deleteDepartment() {
     });
 };
 
-mainMenu()
-//Getting Mysql12 Error, can't figure out why
+appendFile.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
